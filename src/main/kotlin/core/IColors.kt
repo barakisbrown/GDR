@@ -13,30 +13,31 @@ enum class IColors {
     UNKNOWN;
 
     companion object {
-        fun getColorFromLetter(letter : String) : IColors {
+        fun getColorFromLetter(letter : Char) : IColors {
             var retColor = when(letter)
             {
-                "k" -> BLACK
-                "b" -> BLUE
-                "g" -> GREEN
-                "p" -> PURPLE
-                "y" -> YELLOW
-                "r" -> RED
+                'k' -> BLACK
+                'b' -> BLUE
+                'g' -> GREEN
+                'p' -> PURPLE
+                'y' -> YELLOW
+                'r' -> RED
                 else -> UNKNOWN
             }
             return retColor
         }
 
-        fun getDiceFromLetter(letter : String) : Any {
+        fun getDiceFromLetter(letter : Char) : Any {
 
             var dice = Any()
             when(letter)
             {
-                "k" -> dice = BLACK()
-                "b" -> dice = BLUE()
-                "g" -> dice = GREEN()
-                "p" -> dice = YELLOW()
-                "r" -> dice = RED()
+                'k' -> dice = BLACK()
+                'b' -> dice = BLUE()
+                'g' -> dice = GREEN()
+                'p' -> dice = PURPLE()
+                'y' -> dice = YELLOW()
+                'r' -> dice = RED()
             }
 
             return dice

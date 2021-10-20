@@ -2,6 +2,7 @@ package core
 
 import core.bad.*
 import core.good.*
+import core.Dice
 
 class DicePool
 {
@@ -16,8 +17,35 @@ class DicePool
     }
 
     fun add(cmdLine : String) {
-        // TODO("CHAR 1 MEANS I JUST NEED AN OBJECT"
-        var list = parseCmdLine(cmdLine)
+        // Roll Type 1 : "GDR g" => 1 Green/Ability Dice
+        // Roll Type 2 : "GDR K3GPR" => Black(Setback) / 3 Ability / 1 Difficulty / 1 Challenge
+        var counter = 0
+        while(counter < cmdLine.length)
+        {
+            val c = cmdLine[counter++]
+            if (c.isLetter() && cmdLine.length == 1)
+            {
+                // G
+                val obj = IColors.getDiceFromLetter(c)
+                pool.add(obj as Dice)
+            }
+            else if (c.isLetter())
+            {
+                val obj = IColors.getDiceFromLetter(c)
+                pool.add(obj as Dice)
+            }
+            if (c.isDigit() && cmdLine[counter].isLetter())
+            {
+                // 3 [KBGPYR] => roll 3+letter
+                val times = c.digitToInt()
+                val die = cmdLine[counter++]
+                for (loop in 1..times)
+                {
+                    var obj = IColors.getDiceFromLetter(c)
+                    pool.add(obj as Dice)
+                }
+            }
+        }
     }
 
 
@@ -56,6 +84,8 @@ class DicePool
             false -> (advantage - threat)
         }
     }
+
+    fun clearPool() = pool.clear()
 
     private fun parseCmdLine(args : String) : List<String>
     {
